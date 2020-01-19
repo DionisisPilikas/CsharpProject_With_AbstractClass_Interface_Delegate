@@ -122,12 +122,8 @@ namespace drinks_inside_the_fridge
             Console.ForegroundColor = ConsoleColor.White;
             foreach (Product item in AllProductsList)
             {
-                //Predicate delegate,so we don't need call back delegate bool Check();
-                Predicate<decimal> del = delegate (decimal a)
-                {
-                    if (a > 0.8m) { return true; }
-                    else { return false; }
-                };
+                //Lambda expression & ternary operator
+                Predicate<decimal> del = (a) => a > 0.8m ? true : false;
                 //if the result is true, Get the values of product
                 item.GetProductPiceGreater_08euro(del(item.Price));
             }
@@ -168,16 +164,10 @@ namespace drinks_inside_the_fridge
             Console.ForegroundColor = ConsoleColor.White;
             foreach (Product item in FrigeA.AllifridgeList)
             {
-                //Predicate delegate,so we don't need call back delegate bool Check();
-                Predicate<decimal> del = delegate (decimal a)
-                {
-                    if(a>0.8m) { return true; }
-                    else { return false; }
-                };
-
+                //Lambda expression & ternary operator
+                Predicate<decimal> del = (a) => a > 0.8m ? true : false;
                 //if the result is true, Get the values of product
                 item.GetProductPiceGreater_08euro(del(item.Price));
-
             }
             Console.WriteLine();
             decimal Average = 0;
