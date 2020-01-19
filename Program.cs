@@ -106,8 +106,12 @@ namespace drinks_inside_the_fridge
             Console.ForegroundColor = ConsoleColor.White;
             foreach (Product item in AllProductsList)
             {
-                //delegate Print points to the Output Function
-                Print del = item.Output;
+                //Anonymous method
+                //Product entity doesn't contain the property 'Size', so we need casting the Product entity as Drink
+                Print del = delegate ()
+                {
+                    Console.WriteLine($"DRINK | Name: {item.Name,-10}Type: {item.Type,-10}Size: {(item as Drink).Size,-10}Price: {item.Price,-10}");
+                };
                 del();
             }
             Console.WriteLine();
@@ -117,7 +121,13 @@ namespace drinks_inside_the_fridge
             Console.ForegroundColor = ConsoleColor.White;
             foreach (Product item in AllProductsList)
             {
-                Print del = item.GetProductPiceGreater_08euro;
+                Print del = delegate ()
+                {
+                    if (item.Price > 0.8m)
+                    {
+                        Console.WriteLine($"DRINK | Name: {item.Name,-10}Type: {item.Type,-10}Size: {(item as Drink).Size,-10}Price: {item.Price,-10}");
+                    }
+                };
                 del();
             }
             Console.WriteLine();
@@ -148,7 +158,12 @@ namespace drinks_inside_the_fridge
                 //so we need to casting the Product as Drink
                 (item as Drink).OutputFridge();
                 //delegate Print points to the Output Function
-                Print del = item.Output;
+                //Anonymous method
+                //Product entity doesn't contain the property 'Size', so we need casting the Product entity as Drink
+                Print del = delegate ()
+                {
+                    Console.WriteLine($"DRINK | Name: {item.Name,-10}Type: {item.Type,-10}Size: {(item as Drink).Size,-10}Price: {item.Price,-10}");
+                };
                 del();
             }
             Console.WriteLine();
@@ -158,9 +173,36 @@ namespace drinks_inside_the_fridge
             Console.ForegroundColor = ConsoleColor.White;
             foreach (Product item in FrigeA.AllifridgeList)
             {
-                Print del = item.GetProductPiceGreater_08euro;
+                Print del = delegate ()
+                {
+                    if (item.Price > 0.8m)
+                    {
+                        Console.WriteLine($"DRINK | Name: {item.Name,-10}Type: {item.Type,-10}Size: {(item as Drink).Size,-10}Price: {item.Price,-10}");
+                    }
+                };
                 del();
             }
+            Console.WriteLine();
+            decimal Average = 0;
+            decimal Sum = 0;
+            foreach(Product item in AllProductsList)
+            {
+                Sum += item.Price;
+            }
+            Average = Sum / AllProductsList.Count;
+            Console.WriteLine("Average 'Price'value of all Products is : {0}", Average);
+            Console.WriteLine();
+
+            decimal MaxPrice = AllProductsList.ElementAt(0).Price;
+            foreach(Product item in AllProductsList)
+            {
+                if(item.Price > MaxPrice)
+                {
+                    MaxPrice = item.Price;
+                }
+            }
+            Console.WriteLine("Max 'Price' value of all Products is : {0}", MaxPrice);
+
             Console.ReadKey();
         }
     }
