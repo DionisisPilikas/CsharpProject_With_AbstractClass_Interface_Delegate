@@ -24,7 +24,7 @@ namespace drinks_inside_the_fridge
         public abstract decimal Price { get; set; }
         public abstract void Output();
         public abstract bool CheckProductPriceGreater_08euro();
-        public abstract void GetProductPiceGreater_08euro(Check ch);
+        public abstract void GetProductPiceGreater_08euro(bool a);
     }
     interface Ifridge
     {
@@ -54,9 +54,9 @@ namespace drinks_inside_the_fridge
             Console.WriteLine("INSIDE THE FRIDGE");
         }
 
-        public override void GetProductPiceGreater_08euro(Check value)
+        public override void GetProductPiceGreater_08euro(bool a)
         {
-            if(value()) Console.WriteLine($"DRINK | Name: {Name,-10}Type: {Type,-10}Size: {Size,-10}Price: {Price,-10}");
+            if(a) Console.WriteLine($"DRINK | Name: {Name,-10}Type: {Type,-10}Size: {Size,-10}Price: {Price,-10}");
         }
 
 
@@ -122,10 +122,14 @@ namespace drinks_inside_the_fridge
             Console.ForegroundColor = ConsoleColor.White;
             foreach (Product item in AllProductsList)
             {
-                //bool type delegate points to CheckProductPriceGreater_08euro Function
-                Check del = item.CheckProductPriceGreater_08euro;
+                //Predicate delegate,so we don't need call back delegate bool Check();
+                Predicate<decimal> del = delegate (decimal a)
+                {
+                    if (a > 0.8m) { return true; }
+                    else { return false; }
+                };
                 //if the result is true, Get the values of product
-                item.GetProductPiceGreater_08euro(del);
+                item.GetProductPiceGreater_08euro(del(item.Price));
             }
             Console.WriteLine();
 
@@ -164,10 +168,15 @@ namespace drinks_inside_the_fridge
             Console.ForegroundColor = ConsoleColor.White;
             foreach (Product item in FrigeA.AllifridgeList)
             {
-                //bool type delegate points to CheckProductPriceGreater_08euro Function
-                Check del = item.CheckProductPriceGreater_08euro;
+                //Predicate delegate,so we don't need call back delegate bool Check();
+                Predicate<decimal> del = delegate (decimal a)
+                {
+                    if(a>0.8m) { return true; }
+                    else { return false; }
+                };
+
                 //if the result is true, Get the values of product
-                item.GetProductPiceGreater_08euro(del);
+                item.GetProductPiceGreater_08euro(del(item.Price));
 
             }
             Console.WriteLine();
