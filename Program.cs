@@ -120,12 +120,11 @@ namespace drinks_inside_the_fridge
             Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine("PRODUCTS WHOM PRICE IS GREATER THAN 0.8 EURO:");
             Console.ForegroundColor = ConsoleColor.White;
-            foreach (Product item in AllProductsList)
+            AllProductsList.Where(x => x.Price > 0.8m);
+                //so
+            foreach (Product item in AllProductsList.Where(x => x.Price > 0.8m))
             {
-                //Lambda expression & ternary operator
-                Predicate<decimal> del = (a) => a > 0.8m ? true : false;
-                //if the result is true, Get the values of product
-                item.GetProductPiceGreater_08euro(del(item.Price));
+                item.Output();
             }
             Console.WriteLine();
 
