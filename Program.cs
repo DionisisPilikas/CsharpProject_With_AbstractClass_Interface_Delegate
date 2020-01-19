@@ -106,12 +106,8 @@ namespace drinks_inside_the_fridge
             Console.ForegroundColor = ConsoleColor.White;
             foreach (Product item in AllProductsList)
             {
-                //Anonymous method
-                //Product entity doesn't contain the property 'Size', so we need casting the Product entity as Drink
-                Print del = delegate ()
-                {
-                    Console.WriteLine($"DRINK | Name: {item.Name,-10}Type: {item.Type,-10}Size: {(item as Drink).Size,-10}Price: {item.Price,-10}");
-                };
+                //Lambda Expression
+                Print del = () => Console.WriteLine($"DRINK | Name: {item.Name,-10}Type: {item.Type,-10}Size: {(item as Drink).Size,-10}Price: {item.Price,-10}");
                 del();
             }
             Console.WriteLine();
@@ -121,13 +117,9 @@ namespace drinks_inside_the_fridge
             Console.ForegroundColor = ConsoleColor.White;
             foreach (Product item in AllProductsList)
             {
-                Print del = delegate ()
-                {
-                    if (item.Price > 0.8m)
-                    {
-                        Console.WriteLine($"DRINK | Name: {item.Name,-10}Type: {item.Type,-10}Size: {(item as Drink).Size,-10}Price: {item.Price,-10}");
-                    }
-                };
+                //Lambda Expression & Ternary operator
+                //we need put the 'else' (:) case whenever use Ternary operator
+                Print del = () => Console.WriteLine($"DRINK | Name: {item.Name,-10}Type: {item.Type,-10}Size: {(item as Drink).Size,-10}Price: {item.Price,-10}");
                 del();
             }
             Console.WriteLine();
@@ -154,16 +146,9 @@ namespace drinks_inside_the_fridge
             Console.ForegroundColor = ConsoleColor.White;
             foreach (Product item in FrigeA.AllifridgeList)
             {
-                //only the Drink entity inherits of the interface Ifridge
-                //so we need to casting the Product as Drink
                 (item as Drink).OutputFridge();
-                //delegate Print points to the Output Function
-                //Anonymous method
-                //Product entity doesn't contain the property 'Size', so we need casting the Product entity as Drink
-                Print del = delegate ()
-                {
-                    Console.WriteLine($"DRINK | Name: {item.Name,-10}Type: {item.Type,-10}Size: {(item as Drink).Size,-10}Price: {item.Price,-10}");
-                };
+                //Lambda Expression
+                Print del = () => Console.WriteLine($"DRINK | Name: {item.Name,-10}Type: {item.Type,-10}Size: {(item as Drink).Size,-10}Price: {item.Price,-10}");
                 del();
             }
             Console.WriteLine();
@@ -173,13 +158,10 @@ namespace drinks_inside_the_fridge
             Console.ForegroundColor = ConsoleColor.White;
             foreach (Product item in FrigeA.AllifridgeList)
             {
-                Print del = delegate ()
-                {
-                    if (item.Price > 0.8m)
-                    {
-                        Console.WriteLine($"DRINK | Name: {item.Name,-10}Type: {item.Type,-10}Size: {(item as Drink).Size,-10}Price: {item.Price,-10}");
-                    }
-                };
+                //Lambda Expression & Ternary operator
+                //we need put the 'else' (:) case whenever use Ternary operator
+                Print del = () =>
+                Console.WriteLine(item.Price > 0.8m ? $"DRINK | Name: {item.Name,-10}Type: {item.Type,-10}Size: {(item as Drink).Size,-10}Price: {item.Price,-10}" : " ");
                 del();
             }
             Console.WriteLine();
