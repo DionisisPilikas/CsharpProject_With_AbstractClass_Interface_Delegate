@@ -54,19 +54,15 @@ namespace drinks_inside_the_fridge
             Console.WriteLine("INSIDE THE FRIDGE");
         }
 
-        public override void GetProductPiceGreater_08euro(Check value) //call back delegate
-        {                //call back delegate
-            if (value()) //if value is true, Print the values
-            {
-                Console.WriteLine($"DRINK | Name: {Name,-10}Type: {Type,-10}Size: {Size,-10}Price: {Price,-10}");
-            }
-        }
-        //delegate Check will points to this function
-        public override bool CheckProductPriceGreater_08euro()
+        public override void GetProductPiceGreater_08euro(Check value)
         {
-            if(Price>0.8m) { return true; } //return is true when the value of Price is greater than 0.8 
-            else { return false; }
+            if(value()) Console.WriteLine($"DRINK | Name: {Name,-10}Type: {Type,-10}Size: {Size,-10}Price: {Price,-10}");
         }
+
+
+
+        //expression bodied
+        public override bool CheckProductPriceGreater_08euro() => Price > 0.8m ? true : false;
     }
     class Fridge
     {
