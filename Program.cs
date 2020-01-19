@@ -23,7 +23,8 @@ namespace drinks_inside_the_fridge
         public abstract string Type { get; set; }
         public abstract decimal Price { get; set; }
         public abstract void Output();
-        public abstract void GetProductPiceGreater_08euro();
+        public abstract bool CheckProductPriceGreater_08euro();
+        public abstract void GetProductPiceGreater_08euro(Check ch);
     }
     interface Ifridge
     {
@@ -53,12 +54,18 @@ namespace drinks_inside_the_fridge
             Console.WriteLine("INSIDE THE FRIDGE");
         }
 
-        public override void GetProductPiceGreater_08euro()
-        {
-            if (Price > 0.8m)
+        public override void GetProductPiceGreater_08euro(Check value) //call back delegate
+        {                //call back delegate
+            if (value()) //if value is true, Print the values
             {
                 Console.WriteLine($"DRINK | Name: {Name,-10}Type: {Type,-10}Size: {Size,-10}Price: {Price,-10}");
             }
+        }
+        //delegate Check will points to this function
+        public override bool CheckProductPriceGreater_08euro()
+        {
+            if(Price>0.8m) { return true; } //return is true when the value of Price is greater than 0.8 
+            else { return false; }
         }
     }
     class Fridge
@@ -66,6 +73,7 @@ namespace drinks_inside_the_fridge
         public List<Ifridge> AllifridgeList = new List<Ifridge>();
     }
     delegate void Print();
+    delegate bool Check(); //call back delegate
     class Program
     {
         static void Main(string[] args)
@@ -118,10 +126,10 @@ namespace drinks_inside_the_fridge
             Console.ForegroundColor = ConsoleColor.White;
             foreach (Product item in AllProductsList)
             {
-                //Action delegate with ternary operator,so we don't need the delegate void Print() above
-                Action<string,string,float,decimal> del = (string a, string b, float c, decimal d) =>
-                Console.WriteLine(d > 0.8m ? $"DRINK | Name: {a,-10}Type: {b,-10}Size: {c,-10}Price: {d,-10}" : " ");
-                del(item.Name,item.Type,(item as Drink).Size,item.Price);
+                //bool type delegate points to CheckProductPriceGreater_08euro Function
+                Check del = item.CheckProductPriceGreater_08euro;
+                //if the result is true, Get the values of product
+                item.GetProductPiceGreater_08euro(del);
             }
             Console.WriteLine();
 
@@ -160,10 +168,11 @@ namespace drinks_inside_the_fridge
             Console.ForegroundColor = ConsoleColor.White;
             foreach (Product item in FrigeA.AllifridgeList)
             {
-                //Action delegate with ternary operator,so we don't need the delegate void Print() above
-                Action<string, string, float, decimal> del = (a,b,c,d) =>
-                   Console.WriteLine(d > 0.8m ? $"DRINK | Name: {a,-10}Type: {b,-10}Size: {c,-10}Price: {d,-10}" : " ");
-                del(item.Name, item.Type, (item as Drink).Size, item.Price);
+                //bool type delegate points to CheckProductPriceGreater_08euro Function
+                Check del = item.CheckProductPriceGreater_08euro;
+                //if the result is true, Get the values of product
+                item.GetProductPiceGreater_08euro(del);
+
             }
             Console.WriteLine();
             decimal Average = 0;
