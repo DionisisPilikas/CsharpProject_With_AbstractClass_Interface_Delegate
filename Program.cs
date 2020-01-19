@@ -106,9 +106,10 @@ namespace drinks_inside_the_fridge
             Console.ForegroundColor = ConsoleColor.White;
             foreach (Product item in AllProductsList)
             {
-                //Lambda Expression
-                Print del = () => Console.WriteLine($"DRINK | Name: {item.Name,-10}Type: {item.Type,-10}Size: {(item as Drink).Size,-10}Price: {item.Price,-10}");
-                del();
+                //Action delegate, so we don't need the delegate void Print() above 
+                Action<string,string,float,decimal> del = (string a,string b,float c,decimal d)=>
+                Console.WriteLine($"DRINK | Name: {a,-10}Type: {b,-10}Size: {c,-10}Price: {d,-10}");
+                del(item.Name,item.Type,(item as Drink).Size,item.Price);
             }
             Console.WriteLine();
             //Display all products whose Price is greater than 0.8 Euro
@@ -117,10 +118,10 @@ namespace drinks_inside_the_fridge
             Console.ForegroundColor = ConsoleColor.White;
             foreach (Product item in AllProductsList)
             {
-                //Lambda Expression & Ternary operator
-                //we need put the 'else' (:) case whenever use Ternary operator
-                Print del = () => Console.WriteLine($"DRINK | Name: {item.Name,-10}Type: {item.Type,-10}Size: {(item as Drink).Size,-10}Price: {item.Price,-10}");
-                del();
+                //Action delegate with ternary operator,so we don't need the delegate void Print() above
+                Action<string,string,float,decimal> del = (string a, string b, float c, decimal d) =>
+                Console.WriteLine(d > 0.8m ? $"DRINK | Name: {a,-10}Type: {b,-10}Size: {c,-10}Price: {d,-10}" : " ");
+                del(item.Name,item.Type,(item as Drink).Size,item.Price);
             }
             Console.WriteLine();
 
@@ -147,9 +148,10 @@ namespace drinks_inside_the_fridge
             foreach (Product item in FrigeA.AllifridgeList)
             {
                 (item as Drink).OutputFridge();
-                //Lambda Expression
-                Print del = () => Console.WriteLine($"DRINK | Name: {item.Name,-10}Type: {item.Type,-10}Size: {(item as Drink).Size,-10}Price: {item.Price,-10}");
-                del();
+                //Action delegate, so we don't need the delegate void Print() above 
+                Action<string, string, float, decimal> del = (a,b,c,d) =>
+                   Console.WriteLine($"DRINK | Name: {a,-10}Type: {b,-10}Size: {c,-10}Price: {d,-10}");
+                del(item.Name, item.Type, (item as Drink).Size, item.Price);
             }
             Console.WriteLine();
             //Display Drinks inside the FridgeA whose Price is greater than 0.8 euro
@@ -158,11 +160,10 @@ namespace drinks_inside_the_fridge
             Console.ForegroundColor = ConsoleColor.White;
             foreach (Product item in FrigeA.AllifridgeList)
             {
-                //Lambda Expression & Ternary operator
-                //we need put the 'else' (:) case whenever use Ternary operator
-                Print del = () =>
-                Console.WriteLine(item.Price > 0.8m ? $"DRINK | Name: {item.Name,-10}Type: {item.Type,-10}Size: {(item as Drink).Size,-10}Price: {item.Price,-10}" : " ");
-                del();
+                //Action delegate with ternary operator,so we don't need the delegate void Print() above
+                Action<string, string, float, decimal> del = (a,b,c,d) =>
+                   Console.WriteLine(d > 0.8m ? $"DRINK | Name: {a,-10}Type: {b,-10}Size: {c,-10}Price: {d,-10}" : " ");
+                del(item.Name, item.Type, (item as Drink).Size, item.Price);
             }
             Console.WriteLine();
             decimal Average = 0;
