@@ -15,7 +15,7 @@ namespace drinks_inside_the_fridge
     //4)Display all Drinks values inside the new Fridge
     //5)Display all inside the fridge Drinks values whose Price is greater than 0.8 euro
     //6)Display the Max value and the Average of all Prices 
-    //6)Use interface,delegate,anonymous methods,Lambda expression and (where) linq  
+    //7)Use interface,delegate,anonymous methods,Lambda expression and (where) linq  
     abstract class Product
     {
         //only properties & methods can be abstract (not fields)
@@ -65,6 +65,7 @@ namespace drinks_inside_the_fridge
     {
         public List<Ifridge> AllifridgeList = new List<Ifridge>();
     }
+    delegate void Print();
     class Program
     {
         static void Main(string[] args)
@@ -105,7 +106,9 @@ namespace drinks_inside_the_fridge
             Console.ForegroundColor = ConsoleColor.White;
             foreach (Product item in AllProductsList)
             {
-                item.Output();
+                //delegate Print points to the Output Function
+                Print del = item.Output;
+                del();
             }
             Console.WriteLine();
             //Display all products whose Price is greater than 0.8 Euro
@@ -114,7 +117,8 @@ namespace drinks_inside_the_fridge
             Console.ForegroundColor = ConsoleColor.White;
             foreach (Product item in AllProductsList)
             {
-                item.GetProductPiceGreater_08euro();
+                Print del = item.GetProductPiceGreater_08euro;
+                del();
             }
             Console.WriteLine();
 
@@ -143,7 +147,9 @@ namespace drinks_inside_the_fridge
                 //only the Drink entity inherits of the interface Ifridge
                 //so we need to casting the Product as Drink
                 (item as Drink).OutputFridge();
-                item.Output();
+                //delegate Print points to the Output Function
+                Print del = item.Output;
+                del();
             }
             Console.WriteLine();
             //Display Drinks inside the FridgeA whose Price is greater than 0.8 euro
@@ -152,7 +158,8 @@ namespace drinks_inside_the_fridge
             Console.ForegroundColor = ConsoleColor.White;
             foreach (Product item in FrigeA.AllifridgeList)
             {
-                item.GetProductPiceGreater_08euro();
+                Print del = item.GetProductPiceGreater_08euro;
+                del();
             }
             Console.ReadKey();
         }
