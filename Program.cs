@@ -118,14 +118,14 @@ namespace drinks_inside_the_fridge
             Console.WriteLine();
             //Display all products whose Price is greater than 0.8 Euro
             Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine("PRODUCTS WHOM PRICE IS GREATER THAN 0.8 EURO:");
+            Console.WriteLine("PRODUCTS WHOSE PRICE IS GREATER THAN 0.8 EURO:");
             Console.ForegroundColor = ConsoleColor.White;
-            AllProductsList.Where(x => x.Price > 0.8m);
-                //so
-            foreach (Product item in AllProductsList.Where(x => x.Price > 0.8m))
-            {
-                item.Output();
-            }
+            AllProductsList.Where(x => x.Price > 0.8m).ToList().ForEach(x => x.Output()); //using LINQ
+            //so
+            //foreach (Product item in AllProductsList.Where(x => x.Price > 0.8m))
+            //{
+            //    item.Output();
+            //}
             Console.WriteLine();
 
             //Creating a new Fridge by name FridgeA
@@ -169,26 +169,29 @@ namespace drinks_inside_the_fridge
                 item.GetProductPiceGreater_08euro(del(item.Price));
             }
             Console.WriteLine();
-            decimal Average = 0;
-            decimal Sum = 0;
-            foreach(Product item in AllProductsList)
-            {
-                Sum += item.Price;
-            }
-            Average = Sum / AllProductsList.Count;
-            Console.WriteLine("Average 'Price'value of all Products is : {0}", Average);
+            //decimal Average = 0;
+            //decimal Sum = 0;
+            //foreach(Product item in AllProductsList)
+            //{
+            //    Sum += item.Price;
+            //}
+            //Average = Sum / AllProductsList.Count;
+            //Console.WriteLine("Average 'Price'value of all Products is : {0}", Average);
+            decimal average = AllProductsList.Average(x => x.Price); //using LINQ
+            Console.WriteLine("average price = " + average);
             Console.WriteLine();
 
-            decimal MaxPrice = AllProductsList.ElementAt(0).Price;
-            foreach(Product item in AllProductsList)
-            {
-                if(item.Price > MaxPrice)
-                {
-                    MaxPrice = item.Price;
-                }
-            }
-            Console.WriteLine("Max 'Price' value of all Products is : {0}", MaxPrice);
-
+            //decimal MaxPrice = AllProductsList.ElementAt(0).Price;
+            //foreach(Product item in AllProductsList)
+            //{
+            //    if(item.Price > MaxPrice)
+            //    {
+            //        MaxPrice = item.Price;
+            //    }
+            //}
+            //Console.WriteLine("Max 'Price' value of all Products is : {0}", MaxPrice);
+            decimal max = AllProductsList.Max(x => x.Price); //using LINQ
+            Console.WriteLine("max price = " +max);
             Console.ReadKey();
         }
     }
